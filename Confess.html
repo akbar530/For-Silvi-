@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>untukmu (silvi)</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg1: #fff5f8;
+      --bg2: #fff0fb;
+      --accent: #ff6f91;
+      --muted: #7a6b6b;
+      --card: rgba(255,255,255,0.75);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      background: radial-gradient(circle at 10% 10%, var(--bg1), var(--bg2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      overflow: hidden;
+      color: #333;
+    }
+    /* Hati melayang */
+    .heart-wrap { position: absolute; inset: 0; pointer-events: none; }
+    .heart {
+      position: absolute;
+      width: 20px; height: 20px;
+      background: linear-gradient(135deg,#ff9ab8,#ff6f91);
+      transform: rotate(45deg);
+      border-radius: 6px 6px 0 0;
+      opacity: 0.9;
+      animation: floatUp var(--dur) linear infinite;
+    }
+    .heart:before, .heart:after {
+      content: '';
+      position: absolute;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg,#ff9ab8,#ff6f91);
+    }
+    .heart:before { top: -10px; left: 0; }
+    .heart:after { left: 10px; top: 0; }
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(45deg) scale(0.9); opacity: 0; }
+      10% { opacity: 0.9; }
+      100% { transform: translateY(-120vh) rotate(45deg) scale(1.05); opacity: 0; }
+    }
+    /* Kartu confess */
+    .card {
+      width: 100%;
+      max-width: 600px;
+      background: var(--card);
+      backdrop-filter: blur(6px);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(120,90,120,0.12);
+      position: relative;
+      z-index: 2;
+    }
+    .title h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 38px;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    input[type=text], textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(120,90,120,0.1);
+      font-size: 15px;
+      background: rgba(255,255,255,0.9);
+      margin-bottom: 12px;
+      outline: none;
+    }
+    input:focus, textarea:focus {
+      box-shadow: 0 8px 20px rgba(120,90,120,0.06);
+    }
+    textarea { min-height: 140px; resize: vertical; }
+    .btn {
+      display: inline-block;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(90deg,#ff9ab8,#ff6f91);
+      color: white;
+      box-shadow: 0 6px 18px rgba(120,90,120,0.08);
+    }
+    .btn:active { transform: translateY(2px); }
+    @media (max-width: 520px) {
+      .title h1 { font-size: 30px; }
+      .card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="heart-wrap"></div>
+  <main class="card">
+    <div class="title">
+      <h1>Confess</h1>
+    </div>
+    <p class="subtitle">I have a crush on you, will you be my girlfriend?</p>
+    <form method="POST" action="send.php">
+      <input name="fromName" type="text" placeholder="Namamu (boleh kosong)" maxlength="60" />
+      <textarea name="message" placeholder="Tulis juga perasaanmu." maxlength="1000"></textarea>
+      <button class="btn" type="submit">Kirim</button>
+    </form>
+  </main>
+
+  <script>
+    const heartWrap = document.querySelector('.heart-wrap');
+    function spawnHeart() {
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.style.left = Math.random() * 100 + '%';
+      h.style.setProperty('--dur', (6 + Math.random() * 8).toFixed(2) + 's');
+      const size = 12 + Math.random() * 28;
+      h.style.width = size + 'px';
+      h.style.height = size + 'px';
+      heartWrap.appendChild(h);
+      setTimeout(() => h.remove(), 15000);
+    }
+    setInterval(spawnHeart, 700);
+  </script>
+</body>
+</html>
